@@ -17,6 +17,7 @@ public class MainMenuController : MonoBehaviour {
 
 		Debug.Log(System.Environment.Version);
 		Debug.Log(System.Environment.OSVersion);
+
 	}
 	
 	// Update is called once per frame
@@ -36,8 +37,8 @@ public class MainMenuController : MonoBehaviour {
 
 	public void StartGame() {
 		// Load the first level!
-		MissionManager.instance.StartGame();
 		Application.LoadLevel("Level01");
+		MissionManager.instance.StartGame();
 	}
 	
 	public void QuitGame() {

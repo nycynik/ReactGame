@@ -9,13 +9,15 @@ using System.Collections;
  */
 public class MissionManager : MonoBehaviour {
 
+	const int BLOCKS_PER_ROW = 16;
+
 	public enum GameStates { WaitingToStart, InProgress, LostGame, WonGame, Paused }
 
 	public static MissionManager instance; 
 	public static int lives = 3;
 	public static GameStates gameState = GameStates.WaitingToStart;
 
-	public ArrayList bricks;
+	public GameObject[] bricks;
 
 	// could load this from a config file of course, but, its a small
 	// game and I'm the only one writing it.
@@ -47,10 +49,8 @@ public class MissionManager : MonoBehaviour {
 			instance = this; // set the one that is allowed to exist to this one.
 
 			SetupLevels();
-			DrawLevel(0);
 
-		} else if (instance != this) {
-			print ("I Exist" + instance);
+		} else  {
 			Destroy (gameObject);
 		}
 	}
@@ -69,6 +69,13 @@ public class MissionManager : MonoBehaviour {
 		gameState = GameStates.WaitingToStart;
 	}
 
+	void OnLevelWasLoaded(int level) {
+		if (level == 1) {
+			// then this is the game level, so lets start it up! :)
+			DrawLevel(0);
+		}
+	}
+	
 	public static void GameOver(bool playerWon) {
 		if (playerWon) {
 			// won!
@@ -91,11 +98,25 @@ public class MissionManager : MonoBehaviour {
 	}
 
 	// level block setup
-	void DrawLevel(int levelID) {
-		ArrayList thisLevelsBlocks = level[levelID];
+	public void DrawLevel(int levelID) {
+		// find blocks obect for neatness :)
+		// then parent the block to it.
+		// TODO: ^^^^^^^^^^^^^^^^^^^^^^^
 
-		for (int x=0; x<thisLevelsBlocks.Count; x++) {
-			switch (thisLevelsBlocks[x]) {
+		ArrayList thisLevelsBlocks = (ArrayList) levels[levelID];
+
+		float xPos = 0.5f;
+		float yPos = 0f;
+		int index = 0;
+		foreach (int blockType in thisLevelsBlocks) {
+			GameObject block;
+			xPos = 0.5f + (index % BLOCKS_PER_ROW);
+			yPos = 8.0f + (Mathf.Floor(index / BLOCKS_PER_ROW)*0.3f);
+			Vector3 newPos = new Vector3(xPos, yPos,0);
+			block = Instantiate(bricks[blockType].transform, 
+			                    newPos, 
+			                    bricks[blockType].transform.rotation) as GameObject;
+			switch (blockType) {
 			case 0: // skip
 				break;
 			case 1: // 1 hit block
@@ -108,13 +129,19 @@ public class MissionManager : MonoBehaviour {
 			case 4: // special block!!
 				break;
 			}
+			xPos += 1;
+			index++;
 		}
 	}
 
 	void SetupLevels(){
 		levels = new ArrayList();
 
-		ArrayList blocks = new ArrayList{0,1,1,2,2,1,1,0};
+		ArrayList blocks = new ArrayList{
+			0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,
+			0,0,1,1,1,1,2,2,2,2,1,1,1,1,0,0,
+			0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0
+		};
 
 		levels.Add(blocks);
 	}

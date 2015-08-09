@@ -36,7 +36,7 @@ public class Paddle : MonoBehaviour {
 				MissionManager.GameStarted();
 				// move ball for the first time.
 				Rigidbody2D gameBallBody = gameBall.GetComponentInParent<Rigidbody2D>();
-				gameBallBody.velocity = new Vector2(10f, 12f);
+				gameBallBody.velocity = new Vector2(6f, 8f);
 			} else {
 				// Bump it up.
 				print ("blump it up!");

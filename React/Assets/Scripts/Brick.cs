@@ -20,7 +20,7 @@ public class Brick : MonoBehaviour {
 
 		this.timesHit++;
 		if (this.timesHit >= this.MaxHits) {
-			Destroy(this);
+			Destroy(gameObject);
 		}
 
 		if (coll.gameObject.tag == "Enemy")
