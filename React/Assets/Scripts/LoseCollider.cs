@@ -3,11 +3,10 @@ using System.Collections;
 
 public class LoseCollider : MonoBehaviour {
 
-	private MainMenuController mmc;
 
 	// Use this for initialization
 	void Start () {
-		mmc = GameObject.FindObjectOfType<MainMenuController>();
+
 	}
 	
 	// Update is called once per frame
@@ -19,7 +18,7 @@ public class LoseCollider : MonoBehaviour {
 
 		switch (collider.name) {
 			case "GameBall":
-			mmc.JumpToLevel("game_over_win");
+			MissionManager.instance.LoseLife();
 				break;
 		}
 	}

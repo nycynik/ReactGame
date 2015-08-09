@@ -37,6 +37,7 @@ public class MainMenuController : MonoBehaviour {
 
 	public void StartGame() {
 		// Load the first level!
+		Debug.Log ("Launching game!");
 		Application.LoadLevel("Level01");
 		MissionManager.instance.StartGame();
 	}
