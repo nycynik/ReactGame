@@ -25,12 +25,12 @@ public class GameBallController : MonoBehaviour {
 
 		// just to be sure the ball does not get stuck, we mess with it a bit. :)
 		// this is a mess, we need to improve this a LOT.
-		if (clicksSinceBrick > 5) {
+		if (clicksSinceBrick > 7) {
 			clicksSinceBrick = 0;
 			Vector2 curVelocity = GetComponent<Rigidbody2D>().velocity;
 
-			float xVec = Random.Range(1f,3f) * Mathf.Sign(curVelocity.x);
-			float yVec = Random.Range(1f,3f) * Mathf.Sign(curVelocity.y);
+			float xVec = Random.Range(0f,1f) * Mathf.Sign(curVelocity.x);
+			float yVec = Random.Range(0f,1f) * Mathf.Sign(curVelocity.y);
 			Vector2 ballAdjustment = new Vector2(xVec, yVec);
 			GetComponent<Rigidbody2D>().velocity += ballAdjustment;
 		}
