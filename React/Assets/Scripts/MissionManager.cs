@@ -71,7 +71,7 @@ public class MissionManager : MonoBehaviour {
 		// TODO: we should pause here, show a YOU Beat the level dialog.
 
 		this.currentLevel++;
-		if (this.currentLevel>levels.Count) {
+		if (this.currentLevel>=levels.Count) {
 			// you won!
 			GameOver (true);
 		}

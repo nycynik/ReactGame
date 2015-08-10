@@ -4,6 +4,7 @@ using System.Collections;
 public class Paddle : MonoBehaviour {
 
 	private GameBallController gameBall;
+	public bool AutoPlay;
 
 	Vector3 paddleToBallVector;
 
@@ -17,10 +18,17 @@ public class Paddle : MonoBehaviour {
 	void Update () {
 
 		// == Move the paddle.
-		// mouse controls
-		float relativeMouseXPosition = Input.mousePosition.x / Screen.width;
-		float mouseGameWordXPosition = Mathf.Clamp(relativeMouseXPosition * 16, 0.5f,15.5f);; // 16 world units wide.		
-		this.transform.position = new Vector3(mouseGameWordXPosition,this.transform.position.y,this.transform.position.z);
+		if (!AutoPlay) {
+
+			// mouse controls
+			float relativeMouseXPosition = Input.mousePosition.x / Screen.width;
+			float mouseGameWordXPosition = Mathf.Clamp(relativeMouseXPosition * 16, 0.5f,15.5f);; // 16 world units wide.		
+			this.transform.position = new Vector3(mouseGameWordXPosition,this.transform.position.y,this.transform.position.z);
+		} else {
+			// demo mode it up.
+			this.transform.position = new Vector3(gameBall.transform.position.x,this.transform.position.y,this.transform.position.z);
+
+		}
 
 		if (MissionManager.gameState == MissionManager.GameStates.WaitingToStart) {
 			gameBall.transform.position = this.transform.position + paddleToBallVector; // ball position
