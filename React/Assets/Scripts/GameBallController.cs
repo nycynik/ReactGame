@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class GameBallController : MonoBehaviour {
-	
+
+
 	private int clicksSinceBrick = 0;
 
 	// Use this for initialization

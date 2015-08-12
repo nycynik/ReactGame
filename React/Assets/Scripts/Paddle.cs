@@ -6,7 +6,13 @@ public class Paddle : MonoBehaviour {
 	private GameBallController gameBall;
 	public bool AutoPlay;
 
-	Vector3 paddleToBallVector;
+	private Vector3 paddleToBallVector;
+
+	public Vector3 paddleInitialPosition;
+	public Vector3 newPosition;
+	private float distance = 5;
+	private float speed = 1;
+	public bool moving = false;
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +22,8 @@ public class Paddle : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		newPosition = transform.position;
 
 		// == Move the paddle.
 		if (!AutoPlay) {
@@ -40,6 +48,7 @@ public class Paddle : MonoBehaviour {
 		} else if (Input.GetKeyDown(KeyCode.D)) { // move right
 
 		} else if (Input.GetKeyDown(KeyCode.Space) || (Input.GetMouseButtonDown(0))) {
+
 			if (MissionManager.gameState == MissionManager.GameStates.WaitingToStart) {
 				MissionManager.GameStarted();
 				// move ball for the first time.
@@ -47,15 +56,21 @@ public class Paddle : MonoBehaviour {
 				gameBallBody.velocity = new Vector2(6f, 8f);
 			} else {
 				// Bump it up.
-				print ("blump it up!");
+				paddleInitialPosition = transform.position;
+				newPosition = new Vector3(transform.position.x-2f, transform.position.y, transform.position.z);
+
+				print ("bump it up!");
+				moving = true;
 
 			}
 
 		}
 
-
-
+//		if (moving)
+//			transform.position = transform.position + 
+//				(transform.up*(Mathf.PingPong(Time.time*distance*speed + (distance*speed/2), distance*2)-distance));
 
 
 	}
+	
 }

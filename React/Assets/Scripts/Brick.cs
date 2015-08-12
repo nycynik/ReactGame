@@ -6,9 +6,11 @@ public class Brick : MonoBehaviour {
 	private int MaxHits;
 	private int timesHit;
 	private bool isUnbreakable;
+
 	public Sprite[] bricks;
 	public AudioClip brickBreakSound;
-
+	public GameObject explosion;
+	
 	// Use this for initialization
 	void Start () {
 		timesHit=0;
@@ -30,6 +32,11 @@ public class Brick : MonoBehaviour {
 		if (!isUnbreakable) {
 
 			MissionManager.instance.HitBrick();
+
+			// fun colors BOOM!
+			GameObject clone = Instantiate(explosion,gameObject.transform.position, Quaternion.identity) as GameObject;
+			clone.GetComponent<ParticleSystem>().startColor = gameObject.GetComponent<SpriteRenderer>().color;
+			Destroy(clone, clone.GetComponent<ParticleSystem>().duration); 
 
 			// delete if it's gone
 			if (this.timesHit >= this.MaxHits) {
